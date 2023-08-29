@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://github.com/TheBous">
-    <img src="/public/svelte-firebase.svg" alt="logo" width="300"/>
+    <img src="/public/svelte-firebase.png" alt="logo" width="300"/>
   </a>
   <br>
   <br>
