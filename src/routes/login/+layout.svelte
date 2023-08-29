@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from "$app/stores";
 	import AnimatedRoute from "$lib/components/AnimatedRoute.svelte";
+	import { userData } from "$lib/firebase";
 </script>
 
 <nav class="flex justify-center my-6">
@@ -9,17 +10,26 @@
 		<a
 			href="/login/username"
 			class="step"
-			class:step-primary={$page.route.id?.match(/username|photo/g)}
+			class:step-primary={$page.route.id?.match(/username|photo|admin/g)}
 		>
 			Choose Username
 		</a>
 		<a
 			href="/login/photo"
 			class="step"
-			class:step-primary={$page.route.id?.includes("photo")}
+			class:step-primary={$page.route.id?.match(/photo|admin/g)}
 		>
 			Upload Photo
 		</a>
+		{#if $userData?.isAdmin}
+			<a
+				href="/login/admin"
+				class="step"
+				class:step-primary={$page.route.id?.includes("admin")}
+			>
+				Admin panel
+			</a>
+		{/if}
 	</ul>
 </nav>
 

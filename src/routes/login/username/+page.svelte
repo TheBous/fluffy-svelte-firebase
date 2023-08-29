@@ -35,6 +35,7 @@
 		batch.set(doc(db, "usernames", username), { uid: $user?.uid });
 		batch.set(doc(db, "users", $user!.uid), {
 			username,
+			isAdmin: false,
 			photoURL: $user?.photoURL ?? null,
 			published: true,
 			bio: "I am the Walrus",
@@ -56,46 +57,46 @@
 
 <AuthCheck>
 	{#if $userData?.username}
-	  <p class="text-lg">
-		Your username is <span class="text-success font-bold"
-		  >@{$userData.username}</span
-		>
-	  </p>
-	  <p class="text-sm">(Usernames cannot be changed)</p>
-	  <a class="btn btn-primary" href="/login/photo">Upload Profile Image</a>
+		<p class="text-lg">
+			Your username is <span class="text-success font-bold"
+				>@{$userData.username}</span
+			>
+		</p>
+		<p class="text-sm">(Usernames cannot be changed)</p>
+		<a class="btn btn-primary" href="/login/photo">Upload Profile Image</a>
 	{:else}
-	  <form class="w-2/5" on:submit|preventDefault={confirmUsername}>
-		<input
-		  type="text"
-		  placeholder="Username"
-		  class="input w-full"
-		  bind:value={username}
-		  on:input={checkAvailability}
-		  class:input-error={!isValid && isTouched}
-		  class:input-warning={isTaken}
-		  class:input-success={isAvailable && isValid && !loading}
-		/>
-		<div class="my-4 min-h-16 px-8 w-full">
-		  {#if loading}
-			<p class="text-secondary">Checking availability of @{username}...</p>
-		  {/if}
-  
-		  {#if !isValid && isTouched}
-			<p class="text-error text-sm">
-			  must be 3-16 characters long, alphanumeric only
-			</p>
-		  {/if}
-  
-		  {#if isValid && !isAvailable && !loading}
-			<p class="text-warning text-sm">
-			  @{username} is not available
-			</p>
-		  {/if}
-  
-		  {#if isAvailable}
-			<button class="btn btn-success">Confirm username @{username} </button>
-		  {/if}
-		</div>
-	  </form>
+		<form class="w-2/5" on:submit|preventDefault={confirmUsername}>
+			<input
+				type="text"
+				placeholder="Username"
+				class="input w-full"
+				bind:value={username}
+				on:input={checkAvailability}
+				class:input-error={!isValid && isTouched}
+				class:input-warning={isTaken}
+				class:input-success={isAvailable && isValid && !loading}
+			/>
+			<div class="my-4 min-h-16 px-8 w-full">
+				{#if loading}
+					<p class="text-secondary">Checking availability of @{username}...</p>
+				{/if}
+
+				{#if !isValid && isTouched}
+					<p class="text-error text-sm">
+						must be 3-16 characters long, alphanumeric only
+					</p>
+				{/if}
+
+				{#if isValid && !isAvailable && !loading}
+					<p class="text-warning text-sm">
+						@{username} is not available
+					</p>
+				{/if}
+
+				{#if isAvailable}
+					<button class="btn btn-success">Confirm username @{username} </button>
+				{/if}
+			</div>
+		</form>
 	{/if}
-  </AuthCheck>
+</AuthCheck>
