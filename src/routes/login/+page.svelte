@@ -4,8 +4,20 @@
 
 	const signInWithGoogle = async () => {
 		const provider = new GoogleAuthProvider();
-		const user = await signInWithPopup(auth, provider);
-		console.warn(user);
+		const credential = await signInWithPopup(auth, provider);
+		const idToken = await credential.user.getIdToken();
+		await fetch("/api/signin", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ idToken }),
+		});
+	};
+
+	const signOutSSR = async () => {
+		await fetch("/api/signin", { method: "DELETE" });
+		await signOut(auth);
 	};
 </script>
 
@@ -13,9 +25,7 @@
 
 {#if $user}
 	<h3>User logged</h3>
-	<button on:click={() => signOut(auth)} class="btn btn-primary"
-		>Sign Out</button
-	>
+	<button on:click={signOutSSR} class="btn btn-primary">Sign Out</button>
 {:else}
 	<button on:click={signInWithGoogle} class="btn btn-primary"
 		>Login with Google</button

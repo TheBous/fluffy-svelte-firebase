@@ -4,6 +4,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
+		"debug": "vavite-loader vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -12,6 +13,7 @@
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.20.4",
+		"@vavite/node-loader": "^2.0.2",
 		"autoprefixer": "^10.4.15",
 		"daisyui": "^3.6.3",
 		"postcss": "^8.4.28",
